@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  api-llm:
+    container_name: api-llm
+    hostname: api-llm
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID}
+        USERNAME: ${USERNAME}
+        GID: ${GID}
+        GROUPNAME: ${GROUPNAME}
+        HTTP_PROXY: ${HTTP_PROXY:-}
+        HTTPS_PROXY: ${HTTPS_PROXY:-}
+        FTP_PROXY: ${FTP_PROXY:-}
+        NO_PROXY: ${NO_PROXY:-}
+        http_proxy: ${HTTP_PROXY:-}
+        https_proxy: ${HTTPS_PROXY:-}
+        ftp_proxy: ${FTP_PROXY:-}
+        no_proxy: ${NO_PROXY:-}
+    environment:
+      HTPP_PROXY: ${HTPP_PROXY:-}
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+      FTP_PROXY: ${FTP_PROXY:-}
+      NO_PROXY: ${NO_PROXY:-}
+      http_proxy: ${HTTP_PROXY:-}
+      https_proxy: ${HTTPS_PROXY:-}
+      ftp_proxy: ${FTP_PROXY:-}
+      no_proxy: ${NO_PROXY:-}
+    ports:
+      - ${API_PORT_DEV}:8000
+      - ${API_PORT_PROD}:8080
+    user: ${USERNAME}
+    working_dir: /${USERNAME}/api
+    volumes:
+      - ./:/${USERNAME}/api
+    tty: true
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: '10m'

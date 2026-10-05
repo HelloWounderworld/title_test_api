@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  title-ai:
+    container_name: title-ai
+    hostname: title-ai
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        HTTP_PROXY: ${HTTP_PROXY:-}
+        HTTPS_PROXY: ${HTTPS_PROXY:-}
+        FTP_PROXY: ${FTP_PROXY:-}
+        NO_PROXY: ${NO_PROXY:-}
+        http_proxy: ${HTTP_PROXY:-}
+        https_proxy: ${HTTPS_PROXY:-}
+        ftp_proxy: ${FTP_PROXY:-}
+        no_proxy: ${NO_PROXY:-}
+    ports:
+      - ${API_LLM_PORT}:3000
+    environment:
+      HTPP_PROXY: ${HTPP_PROXY:-}
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+      FTP_PROXY: ${FTP_PROXY:-}
+      NO_PROXY: ${NO_PROXY:-}
+      http_proxy: ${HTTP_PROXY:-}
+      https_proxy: ${HTTPS_PROXY:-}
+      ftp_proxy: ${FTP_PROXY:-}
+      no_proxy: ${NO_PROXY:-}
+    working_dir: /leonardo/ai
+    volumes:
+      - ./:/leonardo/ai
+    tty: true
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: '10m'

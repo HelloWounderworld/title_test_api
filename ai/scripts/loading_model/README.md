@@ -1,0 +1,1 @@
+# Carregar o modelo pre-treinado ou treinado para testar

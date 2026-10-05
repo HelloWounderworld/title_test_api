@@ -1,0 +1,12 @@
+.env
+logs/*
+model/*.gguf
+
+!logs/.gitkeep
+
+.venv/*
+
+ai/models/trained/*
+ai/models/pretrained/*
+ai/data/processed/*
+ai/data/raw/*
